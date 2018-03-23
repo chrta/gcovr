@@ -1,34 +1,39 @@
-.PHONY: all outputs clean tests clean-images
+# Makefile for Sphinx documentation
+#
+
+# You can set these variables from the command line.
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+SPHINXPROJ    = gcovr
+SOURCEDIR     = source
+BUILDDIR      = build
 
 PYTHON ?= python
-
 SCREENSHOT_FROM_HTML = wkhtmltoimage --width 700 --quality 5
+SCREENSHOTS = source/_static/screenshot-html.png source/_static/screenshot-html-details.example.cpp.png
 
-SCREENSHOTS = screenshot-html.png screenshot-html-details.example.cpp.png
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-%.html: %.rst outputs
-	rst2html5.py --embed-stylesheet $< $@
+.PHONY: help Makefile all outputs clean tests clean-images
 
-all: guide.html
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+%: Makefile $(SCREENSHOTS) outputs
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-html: guide.html
-
-guide.html: $(SCREENSHOTS)
-
-screenshot-%.png: examples/example-%.html
+source/_static/screenshot-%.png: examples/example-%.html
 	$(SCREENSHOT_FROM_HTML) $< $@
 
 examples/example-%.html:
 	cd examples; ./example_html.sh
 
 outputs:
-	../scripts/gcovr -h > examples/gcovr.out
+	gcovr -h > examples/gcovr.out
 
 tests:
 	$(PYTHON) -m pytest examples -v
-
-clean:
-	rm -f `cat .gitignore`
 
 clean-images:
 	rm -f $(SCREENSHOTS)
