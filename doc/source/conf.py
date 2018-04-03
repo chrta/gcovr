@@ -21,7 +21,7 @@ import gcovr.version
 
 project = u'gcovr'
 copyright = u'2018, the gcovr authors'
-author = u'the gcovr authors.'
+author = u'the gcovr authors'
 
 # The short X.Y version
 version = gcovr.version.__version__
@@ -130,7 +130,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'gcovr.tex', u'gcovr Documentation',
-     u'William Hart, John Siirola and and Lukas Atkinson.', 'manual'),
+     author, 'manual'),
 ]
 
 
