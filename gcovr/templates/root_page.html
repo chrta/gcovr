@@ -4,22 +4,19 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset={{ENC}}"/>
   <title>{{HEAD}}</title>
-  <style media="screen" type="text/css">
-
-    {{CSS | indent}}
-
-  </style>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
 </head>
 
 <body>
 
-  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+  <table class="table">
     <tr><td class="title">GCC Code Coverage Report</td></tr>
     <tr><td class="hr"></td></tr>
 
     <tr>
       <td width="100%">
-        <table cellpadding=1 border=0 width="100%">
+        <table class="table">
           <tr>
             <td width="10%" class="headerName">Directory:</td>
             <td width="35%" class="headerValue">{{DIRECTORY}}</td>
@@ -60,49 +57,39 @@
     <tr><td class="hr"></td></tr>
   </table>
 
-  <center>
-  <table width="80%" cellpadding=1 cellspacing=1 border=0>
-    <tr>
-      <td width="44%"><br></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-    </tr>
-    <tr>
-      <td class="coverTableHead">File</td>
-      <td class="coverTableHead" colspan=3>Lines</td>
-      <td class="coverTableHead" colspan=2>Branches</td>
-    </tr>
-
-    {% for row in ROWS %}
+  <div class="container">
+    <table class="table">
+      <thead>
+	<th>File</th>
+	<th colspan=3>Lines</th>
+	<th colspan=2>Branches</th>
+      </thead>
+      <tbody>
+	{% for row in ROWS %}
 
     <tr>
-      <td class="coverFile" {{row.altstyle}}>{{row.filename}}</td>
-      <td class="coverBar" align="center" {{row.altstyle}}>
-        <table border=0 cellspacing=0 cellpadding=1><tr><td class="coverBarOutline">
-                <div class="graph"><strong class="bar" style="width:{{row.LinesCoverage}}%; {{row.BarBorder}}background-color:{{row.LinesBar}}"></strong></div>
-                </td></tr></table>
+      <td>{{row.filename}}</td>
+      <td>
+	<div class="progress">
+	  <div class="progress-bar progress-bar-{{row.LinesBar}}"
+	       role="progressbar"
+               aria-valuenow="{{row.LinesCoverage}}"
+               aria-valuemin="0" aria-valuemax="100"
+               style="width: {{row.LinesCoverage}}%;"></div>
+          <span class="sr-only">{{row.LinesCoverage}}&nbsp;%</span>
+	</div>
       </td>
-      <td class="CoverValue" style="font-weight:bold; background-color:{{row.LinesColor}};">{{row.LinesCoverage}}&nbsp;%</td>
-      <td class="CoverValue" style="font-weight:bold; background-color:{{row.LinesColor}};">{{row.LinesExec}} / {{row.LinesTotal}}</td>
-      <td class="CoverValue" style="background-color:{{row.BranchesColor}};">{{row.BranchesCoverage}}&nbsp;%</td>
-      <td class="CoverValue" style="background-color:{{row.BranchesColor}};">{{row.BranchesExec}} / {{row.BranchesTotal}}</td>
+      <td class="{{row.LinesColor}}">{{row.LinesCoverage}}&nbsp;%</td>
+      <td class="{{row.LinesColor}}">{{row.LinesExec}} / {{row.LinesTotal}}</td>
+      <td class="{{row.BranchesColor}}">{{row.BranchesCoverage}}&nbsp;%</td>
+      <td class="{{row.BranchesColor}}">{{row.BranchesExec}} / {{row.BranchesTotal}}</td>
     </tr>
 
     {% endfor %}
 
-    <tr>
-      <td width="44%"><br></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-      <td width="8%"></td>
-    </tr>
-  </table>
-  </center>
+      </tbody>
+    </table>
+  </div>
 
   <table width="100%" border=0 cellspacing=0 cellpadding=0>
     <tr><td class="hr"><td></tr>

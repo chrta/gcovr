@@ -12,6 +12,7 @@ import time
 import datetime
 import zlib
 import io
+import shutil
 
 from .version import __version__
 from .utils import commonpath, sort_coverage
@@ -76,12 +77,30 @@ def coverage_to_color(coverage, medium_threshold, high_threshold):
     if coverage is None:
         return 'LightGray'
     elif coverage < medium_threshold:
-        return low_color
+        return 'danger'
     elif coverage < high_threshold:
-        return medium_color
+        return 'warning'
     else:
-        return high_color
+        return 'success'
 
+
+def makedirs(path):
+    try:
+        os.makedirs(path)
+    except OSError as err:
+        if err.errno == os.errno.EEXIST and os.path.isdir(path):
+            pass
+
+
+def copy_static_content(options):
+    from pkg_resources import resource_filename
+
+    css_path = os.path.join(os.path.dirname(options.output), 'css')
+
+    resource = resource_filename(__name__, 'static/css')
+    makedirs(css_path)
+    for file in os.listdir(resource):
+        shutil.copy(os.path.join(resource, file), css_path)
 
 #
 # Produce an HTML report
@@ -90,8 +109,12 @@ def print_html_report(covdata, output_file, options):
     medium_threshold = options.html_medium_threshold
     high_threshold = options.html_high_threshold
     details = options.html_details
+
     if output_file is None:
         details = False
+
+    copy_static_content(options)
+
     data = {}
     data['HEAD'] = options.html_title
     data['VERSION'] = __version__
@@ -318,14 +341,14 @@ def html_row(options, details, sourcefile, nrows, **kwargs):
     else:
         kwargs['BarBorder'] = ""
     if kwargs['LinesCoverage'] < options.html_medium_threshold:
-        kwargs['LinesColor'] = low_color
-        kwargs['LinesBar'] = 'red'
+        kwargs['LinesColor'] = 'danger'
+        kwargs['LinesBar'] = 'danger'
     elif kwargs['LinesCoverage'] < options.html_high_threshold:
-        kwargs['LinesColor'] = medium_color
-        kwargs['LinesBar'] = 'yellow'
+        kwargs['LinesColor'] = 'warning'
+        kwargs['LinesBar'] = 'warning'
     else:
-        kwargs['LinesColor'] = high_color
-        kwargs['LinesBar'] = 'green'
+        kwargs['LinesColor'] = 'success'
+        kwargs['LinesBar'] = 'success'
 
     kwargs['BranchesColor'] = coverage_to_color(kwargs['BranchesCoverage'], options.html_medium_threshold, options.html_high_threshold)
     kwargs['BranchesCoverage'] = '-' if kwargs['BranchesCoverage'] is None else round(kwargs['BranchesCoverage'], 1)
