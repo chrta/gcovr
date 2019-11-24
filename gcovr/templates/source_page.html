@@ -17,33 +17,33 @@
 
     <tr>
       <td width="100%">
-        <table class="table">
+        <table class="table table-sm">
           <tr>
-            <td width="10%" class="headerName">Directory:</td>
-            <td width="35%" class="headerValue">{{DIRECTORY}}</td>
+            <td width="10%">Directory:</td>
+            <td width="35%">{{DIRECTORY}}</td>
             <td width="5%"></td>
             <td width="15%"></td>
-            <td width="10%" class="headerValue" style="text-align:right;">Exec</td>
-            <td width="10%" class="headerValue" style="text-align:right;">Total</td>
-            <td width="15%" class="headerValue" style="text-align:right;">Coverage</td>
+            <td width="10%">Exec</td>
+            <td width="10%">Total</td>
+            <td width="15%">Coverage</td>
           </tr>
           <tr>
-            <td class="headerName">File:</td>
-            <td class="headerValue">{{FILENAME}}</td>
+            <td>File:</td>
+            <td>{{FILENAME}}</td>
             <td></td>
-            <td class="headerName">Lines:</td>
-            <td class="headerTableEntry">{{LINES_EXEC}}</td>
-            <td class="headerTableEntry">{{LINES_TOTAL}}</td>
-            <td class="headerTableEntry" style="background-color:{{LINES_COLOR}}">{{LINES_COVERAGE}} %</td>
+            <td>Lines:</td>
+            <td>{{LINES_EXEC}}</td>
+            <td>{{LINES_TOTAL}}</td>
+            <td class="table-{{LINES_COLOR}}">{{LINES_COVERAGE}} %</td>
           </tr>
           <tr>
-            <td class="headerName">Date:</td>
-            <td class="headerValue">{{DATE}}</td>
+            <td>Date:</td>
+            <td>{{DATE}}</td>
             <td></td>
-            <td class="headerName">Branches:</td>
-            <td class="headerTableEntry">{{BRANCHES_EXEC}}</td>
-            <td class="headerTableEntry">{{BRANCHES_TOTAL}}</td>
-            <td class="headerTableEntry" style="background-color:{{BRANCHES_COLOR}}">{{BRANCHES_COVERAGE}} %</td>
+            <td>Branches:</td>
+            <td>{{BRANCHES_EXEC}}</td>
+            <td>{{BRANCHES_TOTAL}}</td>
+            <td class="table-{{BRANCHES_COLOR}}">{{BRANCHES_COVERAGE}} %</td>
           </tr>
         </table>
       </td>
@@ -55,10 +55,10 @@
   <div class="content">
   <table class="table">
     <tr>
-      <td width="5%" align="right" class="srcHeader">Line</td>
-      <td width="5%" align="right" class="srcHeader">Branch</td>
-      <td width="5%" align="right" class="srcHeader">Exec</td>
-      <td width="75%" align="left" class="srcHeader src">Source</td>
+      <td width="5%">Line</td>
+      <td width="5%">Branch</td>
+      <td width="5%">Exec</td>
+      <td width="75%">Source</td>
     </tr>
 
     {% for row in ROWS %}
