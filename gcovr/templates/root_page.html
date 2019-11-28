@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset={{ENC}}"/>
   <title>{{HEAD}}</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+  <link rel="stylesheet" type="text/css" href="css/gcovr.css">
 </head>
 
 <body>
@@ -71,7 +71,7 @@
       <td>{{row.filename}}</td>
       <td>
 	<div class="progress">
-	  <div class="progress-bar progress-bar-{{row.LinesBar}}"
+	  <div class="progress-bar bg-{{row.LinesBar}}"
 	       role="progressbar"
                aria-valuenow="{{row.LinesCoverage}}"
                aria-valuemin="0" aria-valuemax="100"
