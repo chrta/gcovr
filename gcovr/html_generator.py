@@ -7,6 +7,7 @@
 # This software is distributed under the BSD license.
 
 import os
+import errno
 import sys
 import time
 import datetime
@@ -50,13 +51,13 @@ def templates():
         lstrip_blocks=True)
 
 
-low_color = "LightPink"
-medium_color = "#FFFF55"
-high_color = "LightGreen"
-covered_color = "LightGreen"
-uncovered_color = "LightPink"
-takenBranch_color = "Green"
-notTakenBranch_color = "Red"
+low_color = "danger"
+medium_color = "warning"
+high_color = "success"
+covered_color = "success"
+uncovered_color = "danger"
+takenBranch_color = "success"
+notTakenBranch_color = "danger"
 
 
 def html_escape(s):
@@ -88,7 +89,7 @@ def makedirs(path):
     try:
         os.makedirs(path)
     except OSError as err:
-        if err.errno == os.errno.EEXIST and os.path.isdir(path):
+        if err.errno == errno.EEXIST and os.path.isdir(path):
             pass
 
 
@@ -287,7 +288,7 @@ def source_row(lineno, source, line_cov):
     kwargs['lineno'] = str(lineno)
     kwargs['linebranch'] = []
     if line_cov and line_cov.is_covered:
-        kwargs['covclass'] = 'coveredLine'
+        kwargs['covclass'] = covered_color
         # If line has branches them show them with ticks or crosses
         branches = line_cov.branches
         branchcounter = 0
@@ -296,12 +297,12 @@ def source_row(lineno, source, line_cov):
             branch = branches[branch_id]
             branch_args = {}
             if branch.is_covered:
-                branch_args['class'] = 'takenBranch'
+                branch_args['class'] = takenBranch_color
                 branch_args['message'] = 'Branch {name} taken {count} times'.format(
                     name=branch_id, count=branch.count)
                 branch_args['symbol'] = '&check;'
             else:
-                branch_args['class'] = 'notTakenBranch'
+                branch_args['class'] = notTakenBranch_color
                 branch_args['message'] = 'Branch {name} not taken'.format(
                     name=branch_id)
                 branch_args['symbol'] = '&cross;'
@@ -309,7 +310,7 @@ def source_row(lineno, source, line_cov):
             kwargs['linebranch'].append(branch_args)
         kwargs['linecount'] = str(line_cov.count)
     elif line_cov and line_cov.is_uncovered:
-        kwargs['covclass'] = 'uncoveredLine'
+        kwargs['covclass'] = uncovered_color
         kwargs['linebranch'] = ''
         kwargs['linecount'] = ''
     else:

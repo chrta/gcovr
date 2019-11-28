@@ -53,7 +53,7 @@
   </table>
 
   <div class="content">
-  <table class="table">
+  <table class="table table-striped table-bordered">
     <tr>
       <td width="5%">Line</td>
       <td width="5%">Branch</td>
@@ -67,12 +67,12 @@
     <td class="lineno">{{row.lineno}}</td>
     <td class="linebranch">
       {%- for branch in row.linebranch -%}
-      <span class="{{branch.class}}" title="{{branch.message}}">{{branch.symbol}}</span>
+      <span class="text-{{branch.class}}" title="{{branch.message}}">{{branch.symbol}}</span>
       {%- if branch.wrap %}<br/>{% endif -%}
       {%- endfor -%}
     </td>
-    <td class="linecount {{row.covclass}}">{{row.linecount}}</td>
-    <td class="src {{row.covclass}}"{{row.source}}</td>
+    <td class="linecount table-{{row.covclass}}">{{row.linecount}}</td>
+    <td class="src table-{{row.covclass}} text-monospace">{{row.source}}</td>
     </tr>
     {% endfor %}
 
