@@ -327,20 +327,12 @@ def source_row(lineno, source, line_cov):
 def html_row(options, details, sourcefile, nrows, **kwargs):
     if details and options.relative_anchors:
         sourcefile = os.path.basename(sourcefile)
-    if nrows % 2 == 0:
-        kwargs['altstyle'] = 'style="background-color:LightSteelBlue"'
-    else:
-        kwargs['altstyle'] = ''
     if details:
         kwargs['filename'] = '<a href="%s">%s</a>' % (
             sourcefile, kwargs['filename'].replace('\\', '/')
         )
     kwargs['LinesCoverage'] = round(kwargs['LinesCoverage'], 1)
-    # Disable the border if the bar is too short to see the color
-    if kwargs['LinesCoverage'] < 1e-7:
-        kwargs['BarBorder'] = "border:white; "
-    else:
-        kwargs['BarBorder'] = ""
+
     if kwargs['LinesCoverage'] < options.html_medium_threshold:
         kwargs['LinesColor'] = 'danger'
         kwargs['LinesBar'] = 'danger'
